@@ -5,13 +5,18 @@ class TrackPoint():
     self.lat = lat
     self.lon = lon
     self.time = timestamp
+
+  @property
+  def tuple(self):
+    return (self.lon, self.lat)
+
   def __repr__(self):
     return "%f, %f  @ %s" % (self.lat,self.lon,self.time)
     
 
 def _lat_lon_from_str(geo_str,num_int_digits,hemisphere):
   int_portion = int(geo_str[0:num_int_digits])
-  dec_portion = float("0." + str(geo_str.replace('.','')[num_int_digits:-1]))
+  dec_portion = float(geo_str[num_int_digits:-1])/60.0
   num = int_portion + dec_portion
   if("S" == hemisphere or "W" == hemisphere):
     num = num * -1
